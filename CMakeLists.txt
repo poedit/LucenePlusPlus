@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 2.8.6)
 
 set(lucene++_VERSION_MAJOR 3)
 set(lucene++_VERSION_MINOR 0)
-set(lucene++_VERSION_PATCH 6)
+set(lucene++_VERSION_PATCH 7)
 
 set(lucene++_SOVERSION "0")
 
@@ -99,6 +99,14 @@ endif()
 ####################################
 if(WIN32 OR WIN64)
   set(CMAKE_DEBUG_POSTFIX "d")
+endif()
+
+if(MSVC)
+  # Disable automatic boost linking on Windows as libraries are added to the linker explicitly
+  add_definitions(-DBOOST_ALL_NO_LIB)
+
+  # enable exceptions, see http://msdn.microsoft.com/en-us/library/1deeycx5.aspx
+  add_definitions(-EHsc)
 endif()
 
 if(NOT WIN32 AND NOT CMAKE_SYSTEM MATCHES "SunOS-5*.")
